@@ -1,0 +1,193 @@
+{
+  "name": "home-view",
+  "displayName": "zLab Home",
+  "description": "Home view for zLab extensions",
+  "version": "0.9.0",
+  "publisher": "zLab",
+  "icon": "homeView.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jimhoc94/homeView.git"
+  },
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "idemHome",
+          "title": "IDEM",
+          "icon": "./icons/dinosaur.svg"
+        }
+      ]
+    },
+    "views": {
+      "idemHome": [
+        {
+          "id": "idemHomeView",
+          "name": "HOME",
+          "when": "true"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "idemHome.openSettings",
+        "title": "Open Settings"
+      },
+      {
+        "command": "idemHome.openUrl",
+        "title": "Open URL"
+      },
+      {
+        "command": "idemHome.addToFavorites",
+        "title": "Add to Favorites",
+        "icon": "$(star-empty)"
+      },
+      {
+        "command": "idemHome.removeFromFavorites",
+        "title": "Remove from Favorites",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "idemHome.showView",
+        "title": "Show IDEM HOME",
+        "category": "IDEM"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "idemHome.showView",
+        "key": "ctrl+f1",
+        "when": "true"
+      }
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "idemHome.addToFavorites",
+          "when": "view == idemHomeView && viewItem == favoritable",
+          "group": "inline"
+        },
+        {
+          "command": "idemHome.removeFromFavorites",
+          "when": "view == idemHomeView && viewItem == favorite",
+          "group": "inline"
+        }
+      ]
+    }
+  },
+  "configuration": {
+    "title": "IDEM Home",
+    "properties": {
+      "idemHome.features": {
+        "type": "array",
+        "default": [
+          {
+            "label": "Configuration",
+            "icon": "settings-gear",
+            "children": [
+              {
+                "label": "Show Settings",
+                "icon": "gear",
+                "command": "idemHome.openSettings",
+                "favoritable": true
+              }
+            ]
+          },
+          {
+            "label": "Links",
+            "icon": "link",
+            "children": [
+              {
+                "label": "Google",
+                "icon": "search",
+                "url": "https://www.google.com",
+                "favoritable": true
+              },
+              {
+                "label": "YouTube",
+                "icon": "play",
+                "url": "https://www.youtube.com",
+                "favoritable": true
+              },
+              {
+                "label": "Facebook",
+                "icon": "account",
+                "url": "https://www.facebook.com",
+                "favoritable": true
+              }
+            ]
+          }
+        ],
+        "description": "Configuration de l'arborescence des features",
+        "items": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string",
+              "description": "Nom de la feature ou du lien"
+            },
+            "icon": {
+              "type": "string",
+              "description": "Icône VS Code (ex: gear, link, search)"
+            },
+            "command": {
+              "type": "string",
+              "description": "Commande VS Code à exécuter (optionnel)"
+            },
+            "url": {
+              "type": "string",
+              "description": "URL à ouvrir (optionnel)"
+            },
+            "favoritable": {
+              "type": "boolean",
+              "default": true,
+              "description": "Peut être ajouté aux favoris"
+            },
+            "children": {
+              "type": "array",
+              "description": "Sous-éléments (pour les branches)",
+              "items": {
+                "$ref": "#"
+              }
+            }
+          },
+          "required": ["label", "icon"]
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "npm run clean && npm run esbuild-base -- --minify",
+    "compile-watch": "npm run esbuild-base -- --watch",
+    "esbuild-base": "node esbuild.config.js",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "dev": " npm run esbuild-base -- --watch",
+    "build": "npm run esbuild-base -- --production",
+    "clean": "rimraf out",
+    "package-size": "vsce package --out home-view.vsix && echo 'Package created: home-view.vsix' && ls -lh home-view.vsix"
+  },
+  "devDependencies": {
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "esbuild": "^0.19.0",
+    "eslint": "^8.28.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {}
+}

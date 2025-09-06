@@ -1,0 +1,60 @@
+# Source files - keep only compiled output
+src/**
+tsconfig.json
+esbuild.config.js
+
+# Webview development files - keep only dist
+webview/src/**
+webview/node_modules/**
+webview/package.json
+webview/package-lock.json
+webview/vite.config.ts
+webview/tailwind.config.js
+webview/postcss.config.js
+webview/vite-env.d.ts
+webview/tsconfig.json
+webview/tsconfig.node.json
+webview/.vscode/**
+webview/index.html
+
+# Development dependencies and files
+node_modules/**
+.vscode/**
+.claude/**
+.git/**
+.gitignore
+
+# Build and test files
+.eslintrc.json
+*.test.js
+**/test/**
+out/test/**
+
+# Documentation and misc
+*.md
+!README.md
+CHANGELOG.md
+LICENSE
+
+# Development scripts
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
