@@ -2,7 +2,7 @@
   "name": "home-view",
   "displayName": "zLab Home",
   "description": "Home view for zLab extensions",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "publisher": "zLab",
   "icon": "homeView.png",
   "repository": {
@@ -31,7 +31,7 @@
       "idemHome": [
         {
           "id": "idemHomeView",
-          "name": "HOME",
+          "name": "SHORTCUTS",
           "when": "true"
         }
       ]
