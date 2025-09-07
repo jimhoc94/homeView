@@ -59,6 +59,36 @@
         "command": "idemHome.showView",
         "title": "Show IDEM HOME",
         "category": "IDEM"
+      },
+      {
+        "command": "idemHome.createSubfolder",
+        "title": "Create Subfolder",
+        "icon": "$(add)"
+      },
+      {
+        "command": "idemHome.deleteFolder",
+        "title": "Delete Folder",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "idemHome.createLeafNode",
+        "title": "Add Item",
+        "icon": "$(add)"
+      },
+      {
+        "command": "idemHome.deleteLeafNode",
+        "title": "Delete Item",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "idemHome.editFolder",
+        "title": "Edit Folder",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "idemHome.editLeafNode",
+        "title": "Edit Item",
+        "icon": "$(edit)"
       }
     ],
     "keybindings": [
@@ -72,94 +102,124 @@
       "view/item/context": [
         {
           "command": "idemHome.addToFavorites",
-          "when": "view == idemHomeView && viewItem == favoritable",
+          "when": "view == idemHomeView && (viewItem == favoritable || viewItem == deletableLeafNode)",
           "group": "inline"
         },
         {
           "command": "idemHome.removeFromFavorites",
           "when": "view == idemHomeView && viewItem == favorite",
           "group": "inline"
+        },
+        {
+          "command": "idemHome.createSubfolder",
+          "when": "view == idemHomeView && viewItem == featuresContainer",
+          "group": "inline"
+        },
+        {
+          "command": "idemHome.deleteFolder",
+          "when": "view == idemHomeView && viewItem == userFolder",
+          "group": "inline"
+        },
+        {
+          "command": "idemHome.createLeafNode",
+          "when": "view == idemHomeView && (viewItem == userFolder || viewItem == defaultFolder)",
+          "group": "inline"
+        },
+        {
+          "command": "idemHome.deleteLeafNode",
+          "when": "view == idemHomeView && viewItem == deletableLeafNode",
+          "group": "inline"
+        },
+        {
+          "command": "idemHome.editFolder",
+          "when": "view == idemHomeView && viewItem == userFolder",
+          "group": "inline"
+        },
+        {
+          "command": "idemHome.editLeafNode",
+          "when": "view == idemHomeView && (viewItem == favoritable || viewItem == deletableLeafNode)",
+          "group": "inline"
         }
       ]
-    }
-  },
-  "configuration": {
-    "title": "IDEM Home",
-    "properties": {
-      "idemHome.features": {
-        "type": "array",
-        "default": [
-          {
-            "label": "Configuration",
-            "icon": "settings-gear",
-            "children": [
-              {
-                "label": "Show Settings",
-                "icon": "gear",
-                "command": "idemHome.openSettings",
-                "favoritable": true
-              }
-            ]
-          },
-          {
-            "label": "Links",
-            "icon": "link",
-            "children": [
-              {
-                "label": "Google",
-                "icon": "search",
-                "url": "https://www.google.com",
-                "favoritable": true
-              },
-              {
-                "label": "YouTube",
-                "icon": "play",
-                "url": "https://www.youtube.com",
-                "favoritable": true
-              },
-              {
-                "label": "Facebook",
-                "icon": "account",
-                "url": "https://www.facebook.com",
-                "favoritable": true
-              }
-            ]
-          }
-        ],
-        "description": "Configuration de l'arborescence des features",
-        "items": {
-          "type": "object",
-          "properties": {
-            "label": {
-              "type": "string",
-              "description": "Nom de la feature ou du lien"
+    },
+    "configuration": {
+      "title": "IDEM Home",
+      "properties": {
+        "idemHome.features": {
+          "type": "array",
+          "default": [
+            {
+              "label": "Configuration",
+              "icon": "settings-gear",
+              "children": [
+                {
+                  "label": "Show Settings",
+                  "icon": "gear",
+                  "command": "idemHome.openSettings",
+                  "favoritable": true
+                }
+              ]
             },
-            "icon": {
-              "type": "string",
-              "description": "Icône VS Code (ex: gear, link, search)"
-            },
-            "command": {
-              "type": "string",
-              "description": "Commande VS Code à exécuter (optionnel)"
-            },
-            "url": {
-              "type": "string",
-              "description": "URL à ouvrir (optionnel)"
-            },
-            "favoritable": {
-              "type": "boolean",
-              "default": true,
-              "description": "Peut être ajouté aux favoris"
-            },
-            "children": {
-              "type": "array",
-              "description": "Sous-éléments (pour les branches)",
-              "items": {
-                "$ref": "#"
-              }
+            {
+              "label": "Links",
+              "icon": "link",
+              "children": [
+                {
+                  "label": "Google",
+                  "icon": "search",
+                  "url": "https://www.google.com",
+                  "favoritable": true
+                },
+                {
+                  "label": "YouTube",
+                  "icon": "play",
+                  "url": "https://www.youtube.com",
+                  "favoritable": true
+                },
+                {
+                  "label": "Facebook",
+                  "icon": "account",
+                  "url": "https://www.facebook.com",
+                  "favoritable": true
+                }
+              ]
             }
-          },
-          "required": ["label", "icon"]
+          ],
+          "description": "Configuration de l'arborescence des features",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "description": "Nom de la feature ou du lien"
+              },
+              "icon": {
+                "type": "string",
+                "description": "Icône VS Code (ex: gear, link, search)"
+              },
+              "command": {
+                "type": "string",
+                "description": "Commande VS Code à exécuter (optionnel)"
+              },
+              "url": {
+                "type": "string",
+                "description": "URL à ouvrir (optionnel)"
+              },
+              "favoritable": {
+                "type": "boolean",
+                "default": true,
+                "description": "Peut être ajouté aux favoris"
+              },
+              "children": {
+                "type": "array",
+                "description": "Sous-éléments (pour les branches)",
+                "items": {
+                  "$ref": "#"
+                }
+              }
+            },
+            "required": ["label", "icon"]
+          }
         }
       }
     }
